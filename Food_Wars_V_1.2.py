@@ -99,7 +99,6 @@ for num in range(1, 8):
     break_block['stone'].append(sound)
 #screen details
 pygame.display.set_caption('Food Wars')
-pygame.display.set_icon(icon_img)
 clock = pygame.time.Clock()
 
 
@@ -2719,7 +2718,6 @@ class Select_Charachter():
             g_input.ime_text = str(rgb[1])
             b_input.ime_text = str(rgb[2])
             hex_input.ime_text = str(hexcode)
-
     def get_editing(self):
         return self.editing
     def set_editing(self, setting):
@@ -3225,6 +3223,7 @@ class Main():
         inventory_slots = self.load_image('game_files/imgs/gui/inventory_slots.png')
         self.inventory_slots = pygame.transform.scale(inventory_slots, (tile_size * 3 * 7, tile_size * 3))
         self.icon_img = self.load_image('game_files/imgs/gui/cupcake_icon.png')
+        pygame.display.set_icon(self.icon_img)
         self.keybinds_display = self.load_image('game_files/imgs/menu/keybinds_selector.png')
         logo = self.load_image('game_files/imgs/menu/logo.png')
         self.logo = pygame.transform.scale(logo, (555, 93))
@@ -3335,14 +3334,12 @@ class Main():
         self.devtools_controls_scroll_bar = Scroll_Bar(1, 1)
         self.audio_settings_scroll_bar = Scroll_Bar(37, 1)
         self.license_settings_scroll_bar = Scroll_Bar(0.5, 15)
-        
         self.ingame = False
-        
         #set sliders
         self.scroll_sense = Slider(200, 20, 8, self.scroll_sense_ratio, 2)
-    def add_blit_item(self, item):
-        '''Adds an item to linked list of all items to be blitted'''
-        
+    def blit_item(self, item, location):
+        '''Blits an item'''
+        screen.blit(item, location)
     def game_loop(self):
         '''Main game loop function'''
         #start delta time
@@ -3902,6 +3899,14 @@ class Main():
             clock.tick(fps)
 #create instance of main class
 main = Main()
+#load images
+main.load_button_images()
+main.load_background_images()
+main.load_misc_images()
+#load settings
+main.load_settings()
+#create objects
+main.creat_objects()
 #run game loop
 main.game_loop()
 #close window
