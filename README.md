@@ -25,6 +25,8 @@ It is recommended to read the tips pdf that comes with the release build
 * [Pyperclip](https://pypi.org/project/pyperclip/)
 
 ## Licenses
-While this project is licensed uder GPL 3.0, all license texts for libraries used in the final build are in the ```game_files\lisence_info``` folder
+While this project is licensed under GPL 3.0, all license texts for libraries used in the final build are in the ```game_files\liscense_info``` folder
 
 The license for the Medieval Sharp font is found at ```game_files\fonts\medieval-sharp-font\misc\SIL - Open Font License-c58e.txt```
+
+The license for the DM Serif Text font is found at ```game_files\fonts\DM_Serif_Text\misc\OFL.txt```
