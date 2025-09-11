@@ -1,10 +1,9 @@
 # Status: Nonfunctional
 # Food Wars V1.2
-Food Wars is a simple 2d sandbox game. This is the version 1.2
+Food Wars is a simple 2d sandbox game. This is the version 1.2 update.
 ## Getting Started
 ### Simple Installation
-To install the final build, you just need to download and unzip the release files found [here](https://github.com/Food-Wars/Food-Wars-V1.1/releases/tag/V1.1)
-Note: Currently only a Windows build is available
+No build has been released yet.
 ### Run from Source
 1) Clone the project to your device
 2) Install 3rd party libraries
@@ -16,7 +15,6 @@ Note: Currently only a Windows build is available
 * Use E to open inventory
 * Use ESCAPE to pause
 
-It is recommended to read the tips pdf that comes with the release build
 ## Dependencies
 * [Numpy](https://github.com/numpy/numpy)
 * [opensimplex](https://pypi.org/project/opensimplex/)
