@@ -11,7 +11,7 @@ No build has been released yet.
 
 ## How to Play
 * Use WASD to move
-* Use Q to attack
+* Use J to attack/break
 * Use E to open inventory
 * Use ESCAPE to pause
 
