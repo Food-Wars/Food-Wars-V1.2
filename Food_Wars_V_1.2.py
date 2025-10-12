@@ -3165,6 +3165,8 @@ class Main():
         self.true_scroll = [0,0]
         self.world_num = 0
         self.delete_state = 0
+        #all images will be stored in single dictionary
+        self.images = {}
         #create error image
         error_img = Image.new(mode='RGB', size=(16, 16), color = (0, 0, 0))
         error_img_draw = ImageDraw.Draw(error_img)
@@ -3172,6 +3174,8 @@ class Main():
         error_img_draw.rectangle([(8, 8), (8, 8)], fill ="#800080", outline ="purple") 
         error_img_data = error_img.tobytes()
         self.error_img = pygame.image.frombytes(error_img_data, error_img.size, error_img.mode)
+        #create object to pass blit function to other objects
+        self.blit_obj = lambda image_name, location, area=None, special_flags=0 : self.blit(image_name, location, area, special_flags)
     def load_image(self, path):
         '''Helper function to load images or replace with error image'''
         try:
@@ -3179,54 +3183,54 @@ class Main():
         except:
             return self.error_img
     def load_button_images(self):
-        self.button_img = self.load_image('game_files/imgs/menu/button_img.png')
-        self.button_img = self.load_image(self.button_img, (tile_size * 8, tile_size * 4))
-        self.button_hover_img = pygame.transform.scale(self.button_img, (tile_size * 9, tile_size * 4.5))
-        self.button_selected = self.load_image('game_files/imgs/menu/selected_button.png')
-        self.button_selected = pygame.transform.scale(self.button_selected, (tile_size * 8, tile_size * 4))
-        self.button_settings = self.load_image('game_files/imgs/menu/settings_button.png')
-        self.button_settings = pygame.transform.scale(self.button_settings, (tile_size * 4, tile_size * 4))
-        self.button_settings_hover = self.load_image('game_files/imgs/menu/settings_button_hover.png')
-        self.button_settings_hover = pygame.transform.scale(self.button_settings_hover, (tile_size * 4, tile_size * 4))
-        self.button_settings_game = self.load_image('game_files/imgs/menu/game_settings_button.png')
-        self.button_settings_game = pygame.transform.scale(self.button_settings_game, (tile_size * 7.5, tile_size * 4))
-        self.button_settings_selected = self.load_image('game_files/imgs/menu/game_settings_button_selected.png')
-        self.button_settings_selected = pygame.transform.scale(self.button_settings_selected, (tile_size * 8, tile_size * 4))
-        self.combined_inventory_button = self.load_image('game_files/imgs/menu/combined_stack_button.png')
-        self.combined_inventory_button = pygame.transform.scale(self.combined_inventory_button, (tile_size * 3, tile_size * 3))
-        self.combined_inventory_button_hover = self.load_image('game_files/imgs/menu/combined_stack_button_hover.png')
-        self.combined_inventory_button_hover = pygame.transform.scale(self.combined_inventory_button_hover, (tile_size * 3, tile_size * 3))
-        self.combined_inventory_button_click = self.load_image('game_files/imgs/menu/combined_stack_button_click.png')
-        self.combined_inventory_button_click = pygame.transform.scale(self.combined_inventory_button_click, (tile_size * 3, tile_size * 3))
-        self.switch_off = self.load_image('game_files/imgs/menu/switch_off.png')
-        self.switch_off = pygame.transform.scale(self.switch_off, (tile_size * 5, tile_size * 2.5))
-        self.switch_on = self.load_image('game_files/imgs/menu/switch_on.png')
-        self.switch_on = pygame.transform.scale(self.switch_on, (tile_size * 5, tile_size * 2.5))
-        self.charachter_button_img = self.load_image('game_files/imgs/menu/charachter_button.png')
-        self.charachter_button_img = pygame.transform.scale(self.charachter_button_img, (tile_size * 6, tile_size * 3))
-        self.charachter_button_hover = pygame.transform.scale(self.charachter_button_img, (tile_size * 8, tile_size * 4))
+        button_img = self.load_image('game_files/imgs/menu/button_img.png')
+        self.images['button_img'] = self.load_image(button_img, (tile_size * 8, tile_size * 4))
+        self.images['button_hover_img'] = pygame.transform.scale(button_img, (tile_size * 9, tile_size * 4.5))
+        button_selected = self.load_image('game_files/imgs/menu/selected_button.png')
+        self.images['button_selected'] = pygame.transform.scale(button_selected, (tile_size * 8, tile_size * 4))
+        button_settings = self.load_image('game_files/imgs/menu/settings_button.png')
+        self.images['button_settings'] = pygame.transform.scale(button_settings, (tile_size * 4, tile_size * 4))
+        button_settings_hover = self.load_image('game_files/imgs/menu/settings_button_hover.png')
+        self.images['button_settings_hover'] = pygame.transform.scale(button_settings_hover, (tile_size * 4, tile_size * 4))
+        button_settings_game = self.load_image('game_files/imgs/menu/game_settings_button.png')
+        self.images['button_settings_game'] = pygame.transform.scale(button_settings_game, (tile_size * 7.5, tile_size * 4))
+        button_settings_selected = self.load_image('game_files/imgs/menu/game_settings_button_selected.png')
+        self.image['button_settings_selected'] = pygame.transform.scale(button_settings_selected, (tile_size * 8, tile_size * 4))
+        combined_inventory_button = self.load_image('game_files/imgs/menu/combined_stack_button.png')
+        self.images['combined_inventory_button'] = pygame.transform.scale(combined_inventory_button, (tile_size * 3, tile_size * 3))
+        combined_inventory_button_hover = self.load_image('game_files/imgs/menu/combined_stack_button_hover.png')
+        self.images['combined_inventory_button_hover'] = pygame.transform.scale(combined_inventory_button_hover, (tile_size * 3, tile_size * 3))
+        combined_inventory_button_click = self.load_image('game_files/imgs/menu/combined_stack_button_click.png')
+        self.images['combined_inventory_button_click'] = pygame.transform.scale(combined_inventory_button_click, (tile_size * 3, tile_size * 3))
+        switch_off = self.load_image('game_files/imgs/menu/switch_off.png')
+        self.images['switch_off'] = pygame.transform.scale(switch_off, (tile_size * 5, tile_size * 2.5))
+        switch_on = self.load_image('game_files/imgs/menu/switch_on.png')
+        self.images['switch_on'] = pygame.transform.scale(switch_on, (tile_size * 5, tile_size * 2.5))
+        charachter_button_img = self.load_image('game_files/imgs/menu/charachter_button.png')
+        self.images['charachter_button_img'] = pygame.transform.scale(charachter_button_img, (tile_size * 6, tile_size * 3))
+        self.images['charachter_button_hover'] = pygame.transform.scale(charachter_button_img, (tile_size * 8, tile_size * 4))
     def load_background_images(self):
-        self.inventory_bg = self.load_image('game_files/imgs/gui/inventory_background.png')
+        self.image['inventory_bg'] = self.load_image('game_files/imgs/gui/inventory_background.png')
         inventory_page = self.load_image('game_files/imgs/gui/inventory_page.png')
-        self.inventory_page_left = inventory_page
-        self.inventory_page_right = pygame.transform.flip(inventory_page, True, False)
-        self.respawn_bg = self.load_image('game_files/imgs/gui/respawn_bg.png')
+        self.images['inventory_page_left'] = inventory_page
+        self.images['inventory_page_right'] = pygame.transform.flip(inventory_page, True, False)
+        self.images['respawn_bg'] = self.load_image('game_files/imgs/gui/respawn_bg.png')
         world_select_bg = self.load_image('game_files/imgs/gui/world_selection_bg.png')
-        self.world_select_bg = pygame.transform.scale(world_select_bg, (tile_size * 29, tile_size * 20))
-        self.settings_bg = self.load_image('game_files/imgs/menu/settings_bg.png')
+        self.images['world_select_bg'] = pygame.transform.scale(world_select_bg, (tile_size * 29, tile_size * 20))
+        self.images['settings_bg'] = self.load_image('game_files/imgs/menu/settings_bg.png')
         player_select_bg = self.load_image('game_files/imgs/gui/scroll_bg.png')
-        self.player_select_bg = pygame.transform.scale(player_select_bg, (600, 600))
+        self.images['player_select_bg'] = pygame.transform.scale(player_select_bg, (600, 600))
     def load_misc_images(self):
-        self.ground_tiles_img = self.load_image('game_files/imgs/tiles/tiles_background.png')
+        self.images['ground_tiles_img'] = self.load_image('game_files/imgs/tiles/tiles_background.png')
         interactable_tiles_img = self.load_image('game_files/imgs/tiles/tiles_interactable.png')
-        self.interactable_tiles_img = pygame.transform.scale(interactable_tiles_img, (interactable_tiles_img.get_width() * 2, interactable_tiles_img.get_height() * 2))
+        self.images['interactable_tiles_img'] = pygame.transform.scale(interactable_tiles_img, (interactable_tiles_img.get_width() * 2, interactable_tiles_img.get_height() * 2))
         inventory_slots = self.load_image('game_files/imgs/gui/inventory_slots.png')
-        self.inventory_slots = pygame.transform.scale(inventory_slots, (tile_size * 3 * 7, tile_size * 3))
-        self.icon_img = self.load_image('game_files/imgs/gui/cupcake_icon.png')
-        pygame.display.set_icon(self.icon_img)
-        self.keybinds_display = self.load_image('game_files/imgs/menu/keybinds_selector.png')
+        self.images['inventory_slots'] = pygame.transform.scale(inventory_slots, (tile_size * 3 * 7, tile_size * 3))
+        self.images['icon_img'] = self.load_image('game_files/imgs/gui/cupcake_icon.png')
+        pygame.display.set_icon(self.image['icon_img'])
+        self.images['keybinds_display'] = self.load_image('game_files/imgs/menu/keybinds_selector.png')
         logo = self.load_image('game_files/imgs/menu/logo.png')
-        self.logo = pygame.transform.scale(logo, (555, 93))
+        self.images['logo'] = pygame.transform.scale(logo, (555, 93))
         self.logo_rect = logo.get_rect()
         self.logo_rect.centerx = 300
         self.logo_rect.centery = 100
@@ -3337,9 +3341,9 @@ class Main():
         self.ingame = False
         #set sliders
         self.scroll_sense = Slider(200, 20, 8, self.scroll_sense_ratio, 2)
-    def blit_item(self, item, location):
+    def blit(self, image_name, location, area=None, special_flags=0):
         '''Blits an item'''
-        screen.blit(item, location)
+        screen.blit(self.images[image_name], location, area, special_flags)
     def game_loop(self):
         '''Main game loop function'''
         #start delta time

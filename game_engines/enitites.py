@@ -218,7 +218,7 @@ class Cotten_Candy(Pathfinding):
                 pygame.draw.rect(screen, (255, 0, 0), self.rect, 2)
         return game_map
 class Gelatin(Pathfinding):
-    def __init__(self, entity_num, x, y):
+    def __init__(self, entity_num, x, y, blit):
         self.colour = random.choice(['red', 'yellow', 'blue', 'green'])
         sprite = pygame.image.load('game_files/imgs/entities/gelatin/' + self.colour + '_gelatin.png')
         self.sprite = pygame.transform.scale(sprite, (sprite.get_width() * 2, sprite.get_height() * 2))
@@ -234,6 +234,7 @@ class Gelatin(Pathfinding):
         self.attack_cooldown = 0
         self.hors_frame = 0
         self.speed = 2.5
+        self.blit = blit
     def damage(self, damage_amount):
         self.health -= damage_amount
     def save_to_file(self):
