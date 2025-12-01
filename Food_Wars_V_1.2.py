@@ -1972,12 +1972,13 @@ class Inventory():
         return False
                 
 class Item():
-    def __init__(self, data_num, amount):
+    def __init__(self, data_num, amount, blit_obj):
         self.data_num = str(data_num)
         self.data = item_data[self.data_num]
         self.amount = amount
         self.load_data()
         self.moving = False
+        self.blit_obj = blit_obj
     def load_data(self):
         #function to retrive specifc item data based on item num
         data = item_data[self.data_num]
@@ -2012,7 +2013,7 @@ class Item():
     def blit_item(self, rect, mouse_amount):
         #blit img only if you are not carying the item
         if self.moving == False:
-            screen.blit(item_imgs, rect, self.img_coords)
+            self.blit_obj('item_imgs', rect, self.img_coords)
             #render and blit how many there are
             text_img = font_inventory.render(str(self.amount), True, (255, 255, 255))
             text_rect = text_img.get_rect()
@@ -2021,7 +2022,7 @@ class Item():
             screen.blit(text_img, text_rect)
         #blit differnet number if carrying some items
         elif self.amount > mouse_amount:
-            screen.blit(item_imgs, rect, self.img_coords)
+            self.blit_obj('item_imgs', rect, self.img_coords)
             #render and blit how many there are
             text_img = font_inventory.render(str(self.amount - mouse_amount), True, (255, 255, 255))
             text_rect = text_img.get_rect()
@@ -2124,7 +2125,7 @@ class Input_Box():
         pygame.draw.rect(screen, self.color, self.rect, 2)
         return self.ime_text
 class Button():
-    def __init__(self, x, y, defult_image, hover_image, text, colour):
+    def __init__(self, x, y, defult_image, hover_image, blit, text, colour):
         self.defult_image = defult_image
         self.hover_image = hover_image
 
@@ -2133,7 +2134,6 @@ class Button():
         self.colour = colour
         self.txt_surface = font.render(self.text, True, self.colour)
         self.text_width = self.txt_surface.get_width()
-        
         #resize width to fit text
         if self.txt_surface.get_width() > self.defult_image.get_width():
             self.defult_image = pygame.transform.scale(self.defult_image, (self.txt_surface.get_width() + 20, self.defult_image.get_height()))
@@ -2318,7 +2318,7 @@ class Slider():
         self.slider_amount = self.amount * self.ratio
         return self.slider_amount
 class Select_Charachter():
-    def __init__(self):
+    def __init__(self, current_player, player_rect):
         #load player images
         defult_one = pygame.image.load('game_files/imgs/player/defult_one_spritesheet.png')
         self.player_1 = pygame.transform.scale(defult_one, (defult_one.get_width() * 2, defult_one.get_height() * 2))
@@ -2343,7 +2343,7 @@ class Select_Charachter():
         with Image.open('game_files/imgs/player/custom_three.png') as image:
             self.pillow_3 = image.copy()
         self.current_player = current_player
-        self.player_size = [int(player.rect.width), int(player.rect.height)]
+        self.player_size = [int(player_rect.width), int(player_rect.height)]
         #open player genders
         with open('game_files/settings/player_genders.json', 'r') as genders_file:
             genders = json.load(genders_file)
@@ -3236,7 +3236,7 @@ class Main():
         self.logo_rect.centery = 100
         #load images items
         item_imgs = pygame.image.load('game_files/imgs/items/item_spritesheet.png')
-        self.item_imgs = pygame.transform.scale(item_imgs, (tile_size * 3 * 7, tile_size * 3 * 4))
+        self.images['item_imgs'] = pygame.transform.scale(item_imgs, (tile_size * 3 * 7, tile_size * 3 * 4))
     def load_settings(self):
         '''Load settings'''
         if path.exists('game_files/settings/settings.json'):
@@ -3266,7 +3266,7 @@ class Main():
         self.hotbar = Hotbar()
         self.player = Player(293, 315)
         self.select_world = Select_World()
-        self.select_charachter = Select_Charachter()
+        self.select_charachter = Select_Charachter(self.current_player, self.player.rect)
         self.player.get_player_image()
         self.inventory.get_player_image()
         self.setting_selector = Select_Setting()
