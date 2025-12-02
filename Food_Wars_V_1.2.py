@@ -228,7 +228,7 @@ def handle_music(playlist, event, music):
 #pygame.mixer.music.play(loops=-1) 
 music = False
 #saves settigns to a file. Much more DRY
-def save_settings():
+def save_settings(sfx, music, scroll_sense, coords_on, select_charachter, set_keybinds):
     settings = [sfx, music, scroll_sense.ratio, coords_on, select_charachter.current_player]
     with open('game_files/settings/settings.json', "w") as file:
         json.dump(settings, file)
@@ -370,7 +370,7 @@ class Interactable():
         self_dict['class_type'] = 'interactable'
         self_dict['rect'] = [self.rect.x, self.rect.y, self.rect.width, self.rect.height]
         return self_dict
-    def damage(self, amount, damage_addition):
+    def damage(self, amount, damage_addition, hotbar):
         #play damage sound
         sound = random.choice(break_block[self.type])
         sound.play()
@@ -387,7 +387,7 @@ class Interactable():
         self.health -= damage_amount
         if self.health <= 0:
             self.destroy()
-    def destroy(self):
+    def destroy(self, hotbar):
         #check what item is in the player's hand
         if hotbar.hotbar_slots[f'slot_{hotbar.selector_slot + 1}'][0] != None:
             #item num is a string when stroed  in item class as json stores it as a string
@@ -540,7 +540,7 @@ def load_world(world_num):
                     entity_loaded = False
     #load inventory to hotbar
     hotbar.get_slot_data()
-def debug_menu_show(target_chunk):
+def debug_menu_show(target_chunk, coords_on, scroll):
     #shows coords no matter what if debug is on
     if coords_on == False:
         draw_text(str(scroll), font, white, 10, 10)
@@ -3411,7 +3411,7 @@ class Main():
             #show debug menu if enabled; seperated from setting above so it is blit above the interactables
             if self.debug_menu == True and self.game_state == 0:
                 #show debug menu
-                debug_menu_show(chunk_debug)
+                debug_menu_show(chunk_debug, self.coords_on, self.scroll)
             for event in pygame.event.get():
                 #handle_music(event, playlist, music)
                 if event.type == pygame.QUIT:
