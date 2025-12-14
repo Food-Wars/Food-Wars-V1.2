@@ -1183,18 +1183,20 @@ class Hotbar():
             else:
                 self.hotbar_slots[f'slot_{num}'] = [inventory.slots[f'slot_{num + 19}']['item_data'].img_coords, inventory.slots[f'slot_{num + 19}']['item_data'].amount, f'slot_{num + 19}', inventory.slots[f'slot_{num + 19}']['item_data'].data_num]
 class Inventory():
-    def __init__(self):
+    def __init__(self, blit_obj):
+        self.blit_obj = blit_obj
+        
         inventory_img = pygame.image.load('game_files/imgs/gui/inventory.png')
         self.inventory_img = pygame.transform.scale(inventory_img, (tile_size * 15, tile_size * 12))
         self.inventory_rect = self.inventory_img.get_rect()
         self.inventory_rect.centerx = 300
         self.inventory_rect.centery = 300
         
-        self.page_left = inventory_page_left
+        self.page_left = 'inventory_page_left'
         self.left_rect = self.page_left.get_rect()
         self.left_rect.centerx = 300 - 125
         self.left_rect.centery = 300
-        self.page_right = inventory_page_right
+        self.page_right = 'inventory_page_right'
         self.right_rect = self.page_right.get_rect()
         self.right_rect.centerx = 300 + 125
         self.right_rect.centery = 300
@@ -1400,9 +1402,9 @@ class Inventory():
             else:
                 if coord > 2:
                     coord = 0
-        self.inventory_sort_btn = combined_inventory_button
-        self.inventory_sort_btn_hover = combined_inventory_button_hover
-        self.inventory_sort_btn_click = combined_inventory_button_click
+        self.inventory_sort_btn = 'combined_inventory_button'
+        self.inventory_sort_btn_hover = 'combined_inventory_button_hover'
+        self.inventory_sort_btn_click = 'combined_inventory_button_click'
         self.inventory_sort_rect = self.inventory_sort_btn.get_rect()
         self.inventory_sort_rect.x = self.slots['slot_16']['rect'].x
         self.inventory_sort_rect.y = self.slots['slot_16']['rect'].y + (tile_size * 3)
@@ -1430,7 +1432,7 @@ class Inventory():
         x_count = 0
         y_count = 0
         total_count = 0
-        self.recipie_book_imgs = pygame.transform.scale(item_imgs, (tile_size * 2 * 7, tile_size * 2 * 4))
+        self.recipie_book_imgs = pygame.transform.scale('item_imgs', (tile_size * 2 * 7, tile_size * 2 * 4))
         for recipie in crafting_recepies:
             recipie_values = crafting_recepies[recipie]
             rect = recipie_button_rect.copy()
@@ -1503,10 +1505,10 @@ class Inventory():
         #get mouse pos
         mouse_pos = pygame.mouse.get_pos()
         #print background stuff
-        screen.blit(self.page_left, self.left_rect)
-        screen.blit(self.page_right, self.right_rect)
-        screen.blit(inventory_slots, self.delete_slot_rect, (tile_size * 3 * 6, 0, tile_size * 3, tile_size * 3))
-        screen.blit(self.page_break, self.page_break_1_rect)
+        self.blit_obj(self.page_left, self.left_rect)
+        self.blit_obj(self.page_right, self.right_rect)
+        self.blit_obj('inventory_slots', self.delete_slot_rect, (tile_size * 3 * 6, 0, tile_size * 3, tile_size * 3))
+        self.blit_obj(self.page_break, self.page_break_1_rect)
         draw_text('Inventory:', font, (159, 121, 83), self.right_rect.x + 25, self.right_rect.y + 15)
         #change page if clicked on ribbon
         if self.current_page == 'crafting':
@@ -1541,7 +1543,7 @@ class Inventory():
                 for slot_key in self.recipie_book_grid:
                     slot = self.recipie_book_grid[slot_key]
                     #blit grid to screen
-                    screen.blit(inventory_slots, slot['rect'], slot['img_coords'])
+                    screen.blit('inventory_slots', slot['rect'], slot['img_coords'])
                     #blit arrow
                     screen.blit(self.arrow, (self.left_rect.x + (tile_size * 3 * 3.43), self.left_rect.y + (tile_size * 6) + 200))
                     #draw item name when hovered over
@@ -1563,8 +1565,8 @@ class Inventory():
                 #output slot is in a different section of the list
                 for num in range(1, 10):
                     if self.recipie_book[self.selected_recipie]['slot_data'][num - 1] != None:
-                        screen.blit(item_imgs, self.recipie_book_grid[num]['rect'], item_data[str(self.recipie_book[self.selected_recipie]['slot_data'][num - 1])]['img_coords'])
-                screen.blit(item_imgs, self.recipie_book_grid[10]['rect'], self.recipie_book[self.selected_recipie]['output_img_coords'])
+                        screen.blit('item_imgs', self.recipie_book_grid[num]['rect'], item_data[str(self.recipie_book[self.selected_recipie]['slot_data'][num - 1])]['img_coords'])
+                screen.blit('item_imgs', self.recipie_book_grid[10]['rect'], self.recipie_book[self.selected_recipie]['output_img_coords'])
                 #show x icon and check if it has been clicked
                 screen.blit(self.x_icon, self.x_rect)
                 if self.x_rect.collidepoint(mouse_pos):
@@ -1612,8 +1614,8 @@ class Inventory():
             if self.slots['slot_28']['item_data'] != None:
                 if self.slots['slot_28']['item_data'].item_name == 'Sugar Cloth Boots':
                     screen.blit(self.boots_img, self.player_rect, (16 * self.player_frame * 4, 0, 16 * 4, 32 * 4))
-        screen.blit(self.ribbon_1, self.ribbon_1_rect)
-        screen.blit(self.ribbon_2, self.ribbon_2_rect)
+        self.blit_obj(self.ribbon_1, self.ribbon_1_rect)
+        self.blit_obj(self.ribbon_2, self.ribbon_2_rect)
         #check if combined stacks is clicked on, cant turn on if holding an item 
         if self.combined_stacks_selected and self.mouse_holding == False:
             screen.blit(self.inventory_sort_btn_click, self.inventory_sort_rect)
@@ -1647,26 +1649,26 @@ class Inventory():
             #blit slots with special coords if there is or isnt an item
             if slot['item_data'] != None and 'item_img_coords' in slot:
                 if slot['item_data'].moving == False:
-                    screen.blit(inventory_slots, slot['rect'], slot['item_img_coords'])
+                    self.blit_obj('inventory_slots', slot['rect'], slot['item_img_coords'])
                     slot['item_data'].blit_item(slot['rect'], 0)
                 elif self.mouse_holding == True and slot_key == self.mouse_items['slot_num']:
                     if self.mouse_items['amount'] != slot['item_data'].amount: 
-                        screen.blit(inventory_slots, slot['rect'], slot['item_img_coords'])
+                        self.blit_obj('inventory_slots', slot['rect'], slot['item_img_coords'])
                     else:
-                        screen.blit(inventory_slots, slot['rect'], slot['img_coords'])
+                        self.blit_obj('inventory_slots', slot['rect'], slot['img_coords'])
                     slot['item_data'].blit_item(slot['rect'], self.mouse_items['amount'])
                 else:
                     slot['item_data'].blit_item(slot['rect'], 0)
             #blit item if there is an item
             elif slot['item_data'] != None:
-                screen.blit(inventory_slots, slot['rect'], slot['img_coords'])
+                self.blit_obj('inventory_slots', slot['rect'], slot['img_coords'])
                 if self.mouse_holding == True and slot_key == self.mouse_items['slot_num']:
                     slot['item_data'].blit_item(slot['rect'], self.mouse_items['amount'])
                 else:
                     slot['item_data'].blit_item(slot['rect'], 0)
             #just blit slot if there is no item
             else:
-                screen.blit(inventory_slots, slot['rect'], slot['img_coords'])
+                self.blit_obj('inventory_slots', slot['rect'], slot['img_coords'])
             #print item name if hovering over it
             if slot['rect'].collidepoint(mouse_pos) and slot['item_data'] != None:
                 #don't draw name if you hover over something you are moving
@@ -1912,7 +1914,7 @@ class Inventory():
             if self.mouse_holding == True:
                 #set area for item img to blit to
                 self.mouse_items['img_rect'].x, self.mouse_items['img_rect'].y = mouse_pos[0], mouse_pos[1]
-                screen.blit(item_imgs, self.mouse_items['img_rect'], self.mouse_items['img_coords'])
+                self.blit_obj('item_imgs', self.mouse_items['img_rect'], self.mouse_items['img_coords'])
                 #blit amount
                 text_img = font_inventory.render(str(self.mouse_items['amount']), True, (255, 255, 255))
                 text_rect = text_img.get_rect()
@@ -3262,7 +3264,7 @@ class Main():
         self.b_input =  Input_Box(474, 440, 65, 30, colour_inactive, (0, 0, 0), 'centre', 3)
         self.hex_input =  Input_Box(372.5, 490, 130, 30, colour_inactive, (0, 0, 0), 'centre', 7)
         #set up classes
-        self.inventory = Inventory()
+        self.inventory = Inventory(self.blit_obj)
         self.hotbar = Hotbar()
         self.player = Player(293, 315)
         self.select_world = Select_World()
@@ -3901,6 +3903,7 @@ class Main():
             pygame.display.update() 
             #limit fps
             clock.tick(fps)
+
 #create instance of main class
 main = Main()
 #load images
