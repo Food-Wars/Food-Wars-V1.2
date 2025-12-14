@@ -666,7 +666,7 @@ class Player():
         walk_cooldown = 4
         key = pygame.key.get_pressed()
         for tile in water_rects:
-            if player.hitbox.colliderect(tile[0]):
+            if self.hitbox.colliderect(tile[0]):
                 self.in_water = True
                 self.speed_modifier = 2.2
                 break
@@ -1129,7 +1129,8 @@ class Player():
             pygame.draw.rect(screen, (255, 255, 255), item_rect, 2)
 #gui classes
 class Hotbar():
-    def __init__(self):
+    def __init__(self, blit_obj):
+        self.blit_obj = blit_obj
         img_selected = pygame.image.load('game_files/imgs/gui/inventory_slot_selected.png')
         self.img_selected = pygame.transform.scale(img_selected, (tile_size * 3, tile_size * 3))
         hotbar_img = pygame.image.load('game_files/imgs/gui/hotbar.png')
@@ -1168,7 +1169,7 @@ class Hotbar():
         for num in range (1, 6):
             if self.hotbar_slots[f'slot_{num}'][0] != None:
                 #slots start at 1, so have to go back 1 tile size on blit
-                screen.blit(item_imgs, (self.hotbar_rect.x + ((tile_size * 3 * num) - tile_size * 3), self.hotbar_rect.y), self.hotbar_slots[f'slot_{num}'][0])
+                self.blit_obj('item_imgs', (self.hotbar_rect.x + ((tile_size * 3 * num) - tile_size * 3), self.hotbar_rect.y), self.hotbar_slots[f'slot_{num}'][0])
                 text_img = font_inventory.render(str(self.hotbar_slots[f'slot_{num}'][1]), True, (255, 255, 255))
                 text_rect = text_img.get_rect()
                 text_rect.right = self.hotbar_rect.x + (tile_size * 3 * num) - (tile_size / 3) 
@@ -3265,7 +3266,7 @@ class Main():
         self.hex_input =  Input_Box(372.5, 490, 130, 30, colour_inactive, (0, 0, 0), 'centre', 7)
         #set up classes
         self.inventory = Inventory(self.blit_obj)
-        self.hotbar = Hotbar()
+        self.hotbar = Hotbar(self.blit_obj)
         self.player = Player(293, 315)
         self.select_world = Select_World()
         self.select_charachter = Select_Charachter(self.current_player, self.player.rect)
