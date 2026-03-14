@@ -208,6 +208,6 @@ item_data = {
                 },
            }
 
-with open('C:/Users/zrobi/Documents/python scripts/food wars/V_1.1/game_files/item_data/item_data.json', "w") as file:
+with open('game_files/item_data/item_data.json', "w") as file:
     json.dump(item_data, file) 
 print('Saved!')               
