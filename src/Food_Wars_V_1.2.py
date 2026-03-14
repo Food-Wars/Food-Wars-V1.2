@@ -1,11 +1,14 @@
 # -*- coding: utf-8 -*-
 
 #import 3rd party libraries
-#using pygame-ce
-import pygame as pygame 
+import pygame as pygame  #using pygame-ce
+
+#import scripts
+import scripts.data as data
 
 #initalise modules
 pygame.init()
+
 
 #load images
 icon = pygame.image.load("game_files\imgs\gui\cupcake_icon.png")
@@ -16,6 +19,9 @@ screen_width = 600
 screen = pygame.display.set_mode((screen_width, screen_height))
 pygame.display.set_caption("Food Wars")
 pygame.display.set_icon(icon)
+
+#has to be after display.set_mode() so images can be conveted for performance
+data.loadImages()
 
 #define game variables
 fps = 60
