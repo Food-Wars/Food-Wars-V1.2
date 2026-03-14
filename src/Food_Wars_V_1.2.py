@@ -5,13 +5,14 @@ import pygame as pygame  #using pygame-ce
 
 #import scripts
 import scripts.data as data
+import scripts.eventHandlers as handelers
 
 #initalise modules
 pygame.init()
 
 
 #load images
-icon = pygame.image.load("game_files\imgs\gui\cupcake_icon.png")
+icon = pygame.image.load(r"game_files\imgs\gui\cupcake_icon.png")
 
 #define screen
 screen_height = 600
@@ -26,14 +27,21 @@ data.loadImages()
 #define game variables
 fps = 60
 clock = pygame.time.Clock()
+gameState = "menu"
 
 run = True
 while run == True:
+    screen.fill((0, 0, 0))
     #event handeler
-    for event in pygame.event.get():
-        #handle_music(event, playlist, music)
-        if event.type == pygame.QUIT:
-            run = False #if press x, end game loop
+    match gameState:
+        case "menu":
+            run = handelers.menuHandeler(screen)
+        #fall back event handeler
+        case _:
+            for event in pygame.event.get():
+                #handle_music(event, playlist, music)
+                if event.type == pygame.QUIT:
+                    run = False #if press x, end game loop
     #refresh the screen
     pygame.display.update() 
     #limit fps

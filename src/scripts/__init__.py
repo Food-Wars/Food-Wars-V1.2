@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import scripts.worldGen
-import scripts.data
+from . import data
+from . import worldGen
+from . import eventHandlers

@@ -27,10 +27,9 @@ def generateChunk(x, y):
             if height <= -0.3:
                 tile_type = 2
                 #set interactabl;e item to zero because tile is water
-                interectable_tile = None
             elif height > -0.3:
                 tile_type = 1
             if tile_type != 0:
                 #if the tile is not nothing, add it to the chunk data
-                chunk_data.append([(target_x, target_y), tile_type, interectable_tile])
+                chunk_data.append([(target_x, target_y), tile_type])
     return chunk_data
