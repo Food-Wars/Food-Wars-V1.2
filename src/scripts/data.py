@@ -6,8 +6,13 @@ import pygame
 
 from . import worldGen
 
+icon = None
 terrainSprites = None
 chunks = {}
+
+def loadIcon():
+    global icon
+    icon = pygame.image.load(os.path.join("game_files", "imgs", "gui", "cupcake_icon.png"))
 
 def loadImages():
     global terrainSprites

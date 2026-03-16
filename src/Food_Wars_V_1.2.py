@@ -10,16 +10,15 @@ import scripts.eventHandlers as handelers
 #initalise modules
 pygame.init()
 
-
-#load images
-icon = pygame.image.load(r"game_files\imgs\gui\cupcake_icon.png")
+#load early for display setup
+data.loadIcon()
 
 #define screen
 screen_height = 600
 screen_width = 600
 screen = pygame.display.set_mode((screen_width, screen_height))
 pygame.display.set_caption("Food Wars")
-pygame.display.set_icon(icon)
+pygame.display.set_icon(data.icon)
 
 #has to be after display.set_mode() so images can be conveted for performance
 data.loadImages()
