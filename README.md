@@ -7,7 +7,7 @@ No build has been released yet.
 ### Run from Source
 1) Clone the project to your device
 2) Install 3rd party libraries
-3) Run ```Food_Wars_V_1.1.py```
+3) Run ```Food_Wars_V_1.2.py```
 
 ## How to Play
 * Use WASD to move
@@ -16,11 +16,10 @@ No build has been released yet.
 * Use ESCAPE to pause
 
 ## Dependencies
+* [Pygame-ce](https://github.com/pygame-community/pygame-ce)
+* [opensimplex](https://code.larus.se/lmas/opensimplex)
 * [Numpy](https://github.com/numpy/numpy)
-* [opensimplex](https://pypi.org/project/opensimplex/)
-* [Pillow](https://github.com/python-pillow/Pillow)
-* [Pygame](https://github.com/pygame-community/pygame-ce)
-* [Pyperclip](https://pypi.org/project/pyperclip/)
+
 
 ## Licenses
 While this project is licensed under GPL 3.0, all license texts for libraries used in the final build are in the ```game_files\liscense_info``` folder
