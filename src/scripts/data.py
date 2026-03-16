@@ -33,3 +33,33 @@ def getChunk(x, y):
         return chunks[(x, y)]
     chunks[(x, y)] = worldGen.generateChunk(x, y)
     return chunks[(x, y)]
+
+def move(directions):
+    global camaraChunk
+    global camaraXOffest
+    global camaraYOffest
+
+    #directions storead as (w, a, s, d)
+    if directions[0]:
+        camaraYOffest += 5
+    elif directions[2]:
+        camaraYOffest -= 5
+    if directions[1]:
+        camaraXOffest -= 5
+    elif directions[3]:
+        camaraXOffest += 5
+    
+    #handle moving chunks
+    if camaraYOffest > 128:
+        camaraChunk[1] -= 1
+        camaraYOffest = 0 + (camaraYOffest - 128)
+    elif camaraYOffest < 0:
+        camaraChunk[1] += 1
+        camaraYOffest = 128 + camaraYOffest #already negative
+
+    if camaraXOffest > 128:
+        camaraChunk[0] += 1
+        camaraXOffest = 0 + (camaraXOffest - 128)
+    elif camaraXOffest < 0:
+        camaraChunk[0] -= 1
+        camaraXOffest = 128 + camaraXOffest #already negative
