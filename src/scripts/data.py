@@ -6,10 +6,19 @@ import pygame
 
 from . import worldGen
 
+#image data
 icon = None
 terrainSprites = None
+
+#world data
 chunks = {}
 
+#camara data
+camaraChunk = [0, 0]
+camaraXOffest = 0
+camaraYOffest = 0
+
+#funtions
 def loadIcon():
     global icon
     icon = pygame.image.load(os.path.join("game_files", "imgs", "gui", "cupcake_icon.png"))
