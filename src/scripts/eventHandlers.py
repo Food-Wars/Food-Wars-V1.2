@@ -1,7 +1,8 @@
 '''Stores all the event loops for different game states'''
-
+#import 3rd party librareis
 import pygame
 
+#import scripts
 from . import data
 from . import renderers
 
@@ -23,6 +24,8 @@ def menuHandeler(screen):
     if keys[pygame.K_d]:
         movement[3] += 1
     data.move(movement)
+
+    data.ecsData
 
     renderers.renderMap(screen)
     

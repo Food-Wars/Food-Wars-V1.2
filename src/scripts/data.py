@@ -1,16 +1,26 @@
 '''This is a file for storing global data from files'''
 
+#import standard libraries
 import os
 
+#import 3rd party libraries
 import pygame
+import esper
 
+#import scripts
 from . import worldGen
+
+from ecs import components
+
+
+#         Define Variables
+#--------------------------------------
 
 #image data
 icon = None
 terrainSprites = None
 
-#world data
+#world datas
 chunks = {}
 
 #camara data
@@ -18,7 +28,9 @@ camaraChunk = [0, 0]
 camaraXOffest = 0
 camaraYOffest = 0
 
-#funtions
+#         Define Functions
+#--------------------------------------
+
 def loadIcon():
     global icon
     icon = pygame.image.load(os.path.join("game_files", "imgs", "gui", "cupcake_icon.png"))
