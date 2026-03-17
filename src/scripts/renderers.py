@@ -2,7 +2,7 @@
 
 from . import data
 
-def renderMap(screen):
+def renderMap():
     '''Renders tile background'''
 
     for y in range(-1, 8):
@@ -16,6 +16,6 @@ def renderMap(screen):
                 pos = (tile[0][0]*16 - data.camaraXOffest + x*16*8 , tile[0][1]*16 + data.camaraYOffest + y*16*8)
 
                 if tile[1] == 1:
-                    screen.blit(data.terrainSprites, pos, (0, 0, 16, 16))
+                    data.screen.blit(data.terrainSprites, pos, (0, 0, 16, 16))
                 elif tile[1] == 2:
-                    screen.blit(data.terrainSprites, pos, (16, 0, 16, 16))
+                    data.screen.blit(data.terrainSprites, pos, (16, 0, 16, 16))
