@@ -28,13 +28,18 @@ fps = 60
 clock = pygame.time.Clock()
 gameState = "menu"
 
+dt = clock.tick(fps)
+
 run = True
 while run == True:
+
+    dt /= 1000.0 #convert milliseconds to seconds
+
     screen.fill((0, 0, 0))
     #event handeler
     match gameState:
         case "menu":
-            run = handelers.menuHandeler(screen)
+            run = handelers.menuHandeler(screen, dt)
         #fall back event handeler
         case _:
             for event in pygame.event.get():
@@ -44,7 +49,7 @@ while run == True:
     #refresh the screen
     pygame.display.update() 
     #limit fps
-    clock.tick(fps)
+    dt = clock.tick(fps)
 
 #close window
 pygame.quit()

@@ -1,12 +1,13 @@
 '''Stores all the event loops for different game states'''
 #import 3rd party librareis
 import pygame
+import esper
 
 #import scripts
 from . import data
 from . import renderers
 
-def menuHandeler(screen):
+def menuHandeler(screen, dt):
 
     movement =  [False, False, False, False]
 
@@ -25,7 +26,7 @@ def menuHandeler(screen):
         movement[3] += 1
     data.move(movement)
 
-    data.ecsData
+    esper.process(dt)
 
     renderers.renderMap(screen)
     
