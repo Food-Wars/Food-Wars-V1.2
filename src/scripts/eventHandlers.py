@@ -7,7 +7,7 @@ import esper
 from . import data
 from . import renderers
 
-def menuHandeler(screen, dt):
+def menuHandeler(dt):
 
     movement =  [False, False, False, False]
 
@@ -17,17 +17,17 @@ def menuHandeler(screen, dt):
 
     keys = pygame.key.get_pressed()
     if keys[pygame.K_w]:
-        movement[0] += 1
+        movement[0] = True
     if keys[pygame.K_a]:
-        movement[1] += 1
+        movement[1] = True
     if keys[pygame.K_s]:
-        movement[2] += 1
+        movement[2] = True
     if keys[pygame.K_d]:
-        movement[3] += 1
+        movement[3] = True
     data.move(movement)
 
-    esper.process(dt)
 
-    renderers.renderMap(screen)
+    renderers.renderMap()
+    esper.process(dt)
     
     return True

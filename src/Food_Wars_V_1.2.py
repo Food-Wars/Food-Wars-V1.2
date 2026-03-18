@@ -6,9 +6,11 @@ import pygame as pygame  #using pygame-ce
 #import scripts
 import scripts.data as data
 import scripts.eventHandlers as handelers
+import scripts.ecs as ecs
 
 #initalise modules
 pygame.init()
+ecs.init()
 
 #has to be after display.set_mode() so images can be conveted for performance
 data.loadImages()

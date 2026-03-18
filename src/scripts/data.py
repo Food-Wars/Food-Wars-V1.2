@@ -27,8 +27,8 @@ chunks = {}
 
 #camara data
 camaraChunk = [0, 0]
-camaraXOffest = 0
-camaraYOffest = 0
+camaraXOffset = 0
+camaraYOffset = 0
 
 #         Define Functions
 #--------------------------------------
@@ -49,24 +49,30 @@ def getChunk(x, y):
     chunks[(x, y)] = worldGen.generateChunk(x, y)
     return chunks[(x, y)]
 
+def getImg(name):
+    #temporarily returns a square for testing
+    surf = pygame.Surface((5, 4))
+    surf.fill((0, 0, 0))
+    return surf
+
 def move(directions):
     global camaraChunk
-    global camaraXOffest
-    global camaraYOffest
+    global camaraXOffset
+    global camaraYOffset
 
     #directions storead as (w, a, s, d)
     distances = [0.0, 0.0]
     if directions[0]:
         distances[1] += 5
-    elif directions[2]:
+    elif directions[1]:
         distances[0] -= 5
-    if directions[1]:
+    if directions[2]:
         distances[1] -= 5
     elif directions[3]:
         distances[0] += 5
     
     
-    camaraChunk, camaraXOffest, camaraYOffest = getMovePositions(camaraChunk, camaraXOffest, camaraYOffest, distances)
+    camaraChunk, camaraXOffset, camaraYOffset = getMovePositions(camaraChunk, camaraXOffset, camaraYOffset, distances)
 
 def getMovePositions(chunk, xOffset, yOffset, distances):
     '''handles movement with chunk and offset system'''
@@ -77,7 +83,7 @@ def getMovePositions(chunk, xOffset, yOffset, distances):
     if yOffset > 128:
         chunk[1] -= 1
         yOffset = 0 + (yOffset - 128)
-    elif camaraYOffest < 0:
+    elif camaraYOffset < 0:
         chunk[1] += 1
         yOffset = 128 + yOffset #already negative
 
