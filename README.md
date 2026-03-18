@@ -19,6 +19,7 @@ No build has been released yet.
 * [Pygame-ce](https://github.com/pygame-community/pygame-ce)
 * [opensimplex](https://code.larus.se/lmas/opensimplex)
 * [Numpy](https://github.com/numpy/numpy)
+* [esper](https://github.com/benmoran56/esper)
 
 
 ## Licenses
