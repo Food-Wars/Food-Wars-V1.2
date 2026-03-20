@@ -7,7 +7,7 @@ import esper
 from . import data
 from . import renderers
 
-def menuHandeler(dt):
+def gameHandeler(dt):
 
     movement =  [False, False, False, False]
 

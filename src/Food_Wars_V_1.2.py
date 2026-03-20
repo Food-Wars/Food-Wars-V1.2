@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
 
+#import standard libraries
+from enum import Enum
+
 #import 3rd party libraries
 import pygame as pygame  #using pygame-ce
 
@@ -16,10 +19,15 @@ ecs.init()
 data.loadImages()
 data.loadIcon()
 
+#define states
+class States(Enum):
+    GAME = 0
+    MENU = 1
+
 #define game variables
 fps = 60
 clock = pygame.time.Clock()
-gameState = "menu"
+gameState = States.MENU
 
 dt = clock.tick(fps)
 
@@ -31,8 +39,8 @@ while run == True:
     data.screen.fill((0, 0, 0))
     #event handeler
     match gameState:
-        case "menu":
-            run = handelers.menuHandeler(dt)
+        case States.GAME:
+            run = handelers.gameHandeler(dt)
         #fall back event handeler
         case _:
             for event in pygame.event.get():
