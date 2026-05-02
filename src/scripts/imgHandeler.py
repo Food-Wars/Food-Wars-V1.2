@@ -1,5 +1,6 @@
 '''All nessecary methods for loading spritesheets'''
 
+from pathlib import Path
 import json
 
 import pygame
@@ -12,11 +13,13 @@ def loadImgs(dataPath):
 
         output = {}
 
-        output["img"] = pygame.image.load(data["meta"]["image"])
+        #images should be in the same directory as the json data file
+        imgPath = Path(dataPath.parent, data["meta"]["image"])
+
+        output["img"] = pygame.image.load(imgPath)
 
         for sprite in data["frames"].keys():
             output[sprite] = {}
             output[sprite]["coords"] = data["frames"][sprite]["frame"]
         
         return output
-

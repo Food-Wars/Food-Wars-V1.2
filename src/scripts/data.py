@@ -1,7 +1,7 @@
 '''This is a file for storing global data from files'''
 
 #import standard libraries
-import os
+from pathlib import Path
 
 #import 3rd party libraries
 import pygame
@@ -36,12 +36,12 @@ camaraYOffset = 0
 
 def loadIcon():
     global icon
-    icon = pygame.image.load(os.path.join("game_files", "imgs", "gui", "cupcake_icon.png"))
+    icon = pygame.image.load(Path("game_files", "imgs", "icons", "cupcake_icon.png"))
     pygame.display.set_icon(icon)
 
 def loadImages():
     global terrainSprites
-    terrainSprites = imgHandeler.loadImgs(os.path.join("game_files", "imgs", "tiles", "tiles.json"))
+    terrainSprites = imgHandeler.loadImgs(Path("game_files", "imgs", "tiles", "tiles.json"))
     terrainSprites["img"].convert() #reccomended for blit speed
 
 def getChunk(x, y):
