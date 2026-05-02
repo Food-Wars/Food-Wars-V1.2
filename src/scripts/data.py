@@ -9,6 +9,7 @@ import esper
 
 #import scripts
 from . import worldGen
+from . import imgHandeler
 
 #         Define Variables
 #--------------------------------------
@@ -40,8 +41,8 @@ def loadIcon():
 
 def loadImages():
     global terrainSprites
-    terrainSprites = pygame.image.load(os.path.join("game_files", "imgs", "tiles", "tiles_background.png"))
-    terrainSprites.convert() #reccomended for blit speed
+    terrainSprites = imgHandeler.loadImgs(os.path.join("game_files", "imgs", "tiles", "tiles.json"))
+    terrainSprites["img"].convert() #reccomended for blit speed
 
 def getChunk(x, y):
     if (x, y) in chunks.keys():
@@ -49,11 +50,16 @@ def getChunk(x, y):
     chunks[(x, y)] = worldGen.generateChunk(x, y)
     return chunks[(x, y)]
 
-def getImg(name):
-    #temporarily returns a square for testing
-    surf = pygame.Surface((5, 4))
-    surf.fill((0, 0, 0))
-    return surf
+def getImg(imgSet, name):
+    match imgSet():
+        case "terrain":
+            surf = terrainSprites["img"]
+            coords = terrainSprites[name]["coords"]
+        case _:
+            surf = pygame.Surface((5, 5))
+            surf.fill((0, 0, 0))
+            coords = (0, 0, 5, 5)
+    return surf, coords
 
 def move(directions):
     global camaraChunk
