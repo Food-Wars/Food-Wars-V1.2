@@ -4,7 +4,6 @@ from . import data
 
 def renderMap():
     '''Renders tile background'''
-
     for y in range(-1, 8):
         for x in range(-1, 8):
             chunk = data.getChunk(x + data.camaraChunk[0], y + data.camaraChunk[1])
@@ -16,9 +15,13 @@ def renderMap():
                 pos = (tile[0][0]*16 - data.camaraXOffset + x*16*8 , tile[0][1]*16 + data.camaraYOffset + y*16*8)
 
                 if tile[1] == 1:
-                    data.screen.blit(data.terrainSprites, pos, (0, 0, 16, 16))
+                    surf, coords = data.getImg("terrain", "grass",)
                 elif tile[1] == 2:
-                    data.screen.blit(data.terrainSprites, pos, (16, 0, 16, 16))
+                    surf, coords = data.getImg("terrain", "water")
+                else:
+                    #skip if not a valid tile
+                    continue
+                data.screen.blit(surf, pos, coords)
 
 def getScreenPos(chunk, xOffset, yOffset):
     chunkOffset = (chunk[0] - data.camaraChunk[0], chunk[1] - data.camaraChunk[1])

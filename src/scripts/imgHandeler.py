@@ -20,6 +20,8 @@ def loadImgs(dataPath):
 
         for sprite in data["frames"].keys():
             output[sprite] = {}
-            output[sprite]["coords"] = data["frames"][sprite]["frame"]
-        
+            output[sprite]["coords"] = _coordsToTuple(data["frames"][sprite]["frame"])
+
         return output
+def _coordsToTuple(coords):
+    return (coords["x"], coords["y"], coords["w"], coords["h"])

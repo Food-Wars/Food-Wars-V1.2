@@ -27,7 +27,7 @@ class States(Enum):
 #define game variables
 fps = 64
 clock = pygame.time.Clock()
-gameState = States.MENU
+gameState = States.GAME
 
 dt = clock.tick(fps)
 

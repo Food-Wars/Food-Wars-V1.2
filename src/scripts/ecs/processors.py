@@ -8,7 +8,10 @@ from ..import renderers
 class RenderProcessor(esper.Processor):
     def process(dt):
         for entID, (pos, rend) in esper.get_components(components.Position, components.Renderable):
-            data.screen.blit(data.getImg(rend.image), renderers.getScreenPos(pos.Chunk, pos.xOffset, pos.yOffset))
+
+            surf, coords = data.getImg("player", rend.image)
+
+            data.screen.blit(surf, renderers.getScreenPos(pos.Chunk, pos.xOffset, pos.yOffset), coords)
 
 class MovementProcessor(esper.Processor):
     def process(dt):

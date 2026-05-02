@@ -26,7 +26,6 @@ def gameHandeler(dt):
         movement[3] = True
     data.move(movement)
 
-
     renderers.renderMap()
     esper.process(dt)
     

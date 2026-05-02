@@ -51,7 +51,7 @@ def getChunk(x, y):
     return chunks[(x, y)]
 
 def getImg(imgSet, name):
-    match imgSet():
+    match imgSet:
         case "terrain":
             surf = terrainSprites["img"]
             coords = terrainSprites[name]["coords"]
