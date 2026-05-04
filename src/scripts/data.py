@@ -9,6 +9,7 @@ import pygame
 #import scripts
 from . import worldGen
 from . import imgHandeler
+from .ecs import handeler 
 
 #         Define Variables
 #--------------------------------------
@@ -29,6 +30,9 @@ chunks = {}
 camaraChunk = [0, 0]
 camaraXOffset = 0
 camaraYOffset = 0
+
+#entity data
+player = handeler.create_player()
 
 #         Define Functions
 #--------------------------------------
