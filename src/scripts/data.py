@@ -5,11 +5,14 @@ from pathlib import Path
 
 #import 3rd party libraries
 import pygame
+import esper
 
 #import scripts
 from . import worldGen
 from . import imgHandeler
 from .ecs import handeler 
+from .ecs import components 
+
 
 #         Define Variables
 #--------------------------------------
@@ -72,16 +75,17 @@ def move(directions):
     #directions storead as (w, a, s, d)
     distances = [0.0, 0.0]
     if directions[0]:
-        distances[1] += 5
+        distances[1] += 1
     elif directions[1]:
-        distances[0] -= 5
+        distances[0] -= 1
     if directions[2]:
-        distances[1] -= 5
+        distances[1] -= 1
     elif directions[3]:
-        distances[0] += 5
+        distances[0] += 1
+
+    esper.add_component(player, components.Velocity(distances[0], distances[1]))
     
-    
-    camaraChunk, camaraXOffset, camaraYOffset = getMovePositions(camaraChunk, camaraXOffset, camaraYOffset, distances)
+    #camaraChunk, camaraXOffset, camaraYOffset = getMovePositions(camaraChunk, camaraXOffset, camaraYOffset, distances)
 
 def getMovePositions(chunk, xOffset, yOffset, distances):
     '''handles movement with chunk and offset system'''

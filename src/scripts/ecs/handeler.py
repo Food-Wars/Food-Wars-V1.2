@@ -10,3 +10,4 @@ def init():
 
 def create_player():
     player = esper.create_entity(components.Player("player", "active", 20), components.Position([0, 0], 0, 0), components.Renderable("playerImage", (0, 0, 16, 32)))
+    return player
