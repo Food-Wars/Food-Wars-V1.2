@@ -5,7 +5,6 @@ from pathlib import Path
 
 #import 3rd party libraries
 import pygame
-import esper
 
 #import scripts
 from . import worldGen
